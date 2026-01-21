@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Africa Chic | Boutique de Luxe</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark: #0f0f0f;
+            --gold: #c89b3c;
+            --bg: #f6f4ef;
+            --white: #ffffff;
+            --whatsapp: #25D366;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: #222;
+            line-height: 1.6;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            background: #fff;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; }
+        header span { color: var(--gold); }
+
+        nav { margin-top: 15px; }
+        nav a { 
+            margin: 0 20px; 
+            text-decoration: none; 
+            color: #333; 
+            font-weight: 500; 
+            font-size: 0.9rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: var(--gold);
+            transition: all 0.3s ease-in-out;
+            transform: translateX(-50%);
+        }
+        nav a:hover::after { width: 100%; }
+
+        /* ===== BANNIÈRE (CARROUSEL DES 12 PRODUITS) ===== */
+        .slideshow-container {
+            width: 100%;
+            height: 600px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+        .mySlides { display: none; width: 100%; height: 100%; animation: fade 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+        .slide-text {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: white; text-align: center; width: 80%;
+        }
+        .slide-text h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+        .slide-text .price-banner { font-size: 1.5rem; color: var(--gold); font-weight: 600; }
+
+        /* ===== BOUTIQUE (GRILLE 4x3) ===== */
+        section { max-width: 1300px; margin: 4rem auto; padding: 0 1.5rem; }
+        h2.section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; }
+        h2.section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gold); margin: 10px auto; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.4s; display: flex; flex-direction: column; }
+        .card .img-container { overflow: hidden; height: 260px; }
+        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .card:hover img { transform: scale(1.1); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+
+        .card-body { padding: 1.2rem; flex-grow: 1; }
+        .card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 5px; }
+        .price { color: var(--gold); font-weight: 700; margin-bottom: 1rem; }
+        .actions { display: flex; gap: 8px; }
+
+        .btn { flex: 1; padding: 0.7rem; border-radius: 50px; font-size: 0.75rem; text-align: center; text-decoration: none; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
+        .btn-buy { background: var(--dark); color: #fff; }
+        .btn-buy:hover { background: var(--gold); }
+        .btn-wa { background: var(--whatsapp); color: #fff; }
+
+        /* ===== PANIER ===== */
+        .cart { 
+            position: fixed; top: 50%; transform: translateY(-50%); 
+            right: -400px; width: 350px; max-height: 80vh; 
+            background: #fff; box-shadow: -10px 0 40px rgba(0,0,0,0.15); 
+            padding: 2rem; transition: 0.4s; z-index: 2000; 
+            border-radius: 25px 0 0 25px; 
+            display: flex; flex-direction: column;
+        }
+        .cart.open { right: 0; }
+        #cartList { overflow-y: auto; flex-grow: 1; margin: 1rem 0; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        /* ===== À PROPOS & CONTACT ===== */
+        .about-content { display: flex; align-items: center; gap: 3rem; background: #fff; padding: 3rem; border-radius: 20px; }
+        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #fff; padding: 3rem; border-radius: 20px; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+
+        footer { background: var(--dark); color: #fff; text-align: center; padding: 3rem; margin-top: 4rem; }
+
+        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+
+      /* ===== RÉGLAGES SPÉCIFIQUES MOBILE (SMARTPHONE) ===== */
+@media (max-width: 768px) {
+    /* Header plus fin */
+    header h1 { font-size: 1.5rem; }
+    nav a { margin: 0 5px; font-size: 0.7rem; }
+
+    /* Bannière adaptée */
+    .slideshow-container { height: 300px; }
+    .slide-text h2 { font-size: 1.6rem; }
+
+    /* Grille 2 colonnes pour voir plus de produits */
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 10px;
+    }
+
+    /* Cartes produits compactes */
+    .card .img-container { height: 160px; }
+    .card-body { padding: 0.7rem; }
+    .card-body h3 { font-size: 0.8rem; line-height: 1.2; height: 2rem; }
+    
+    /* Boutons de la grille */
+    .actions { flex-direction: column; gap: 4px; }
+    .btn { padding: 8px; font-size: 0.7rem; border-radius: 6px; }
+
+    /* LE PANIER MOBILE (TIROIR BAS) */
+    .cart { 
+        width: 100%; 
+        right: 0; 
+        left: 0;
+        top: auto;
+        bottom: -100%; /* Caché en bas */
+        transform: none; 
+        height: auto; 
+        max-height: 50vh; /* Ne prend que la moitié de l'écran */
+        border-radius: 25px 25px 0 0; /* Arrondi sur le haut uniquement */
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+        padding: 1.5rem;
+        transition: bottom 0.4s ease-in-out;
+    }
+
+    /* Quand le panier est ouvert sur mobile */
+    .cart.open { 
+        bottom: 0; 
+    }
+
+    /* Ajustement du bouton WhatsApp dans le panier */
+    #cartWa {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    /* Liste d'articles du panier plus compacte */
+    .cart-item { font-size: 0.9rem; padding: 8px 0; }
+}
+
+/* Style pour le logo */
+.logo-container {
+    margin-bottom: -20px; /* On supprime l'espace sous le conteneur */
+    line-height: 0;     /* Supprime l'espace résiduel sous l'image */
+}
+
+.main-logo {
+    max-height: 160px; 
+    width: auto;      
+    display: block;    
+    margin: 0 auto;    
+}
+
+/* AJOUTEZ CECI pour le titre */
+header h1 {
+    margin-top: 0px;    /* Supprime la marge automatique du titre */
+    padding-top: 5px;   /* Permet un contrôle précis (ajustez de 0 à 10px) */
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+}
+
+/* Ajustement pour mobile */
+@media (max-width: 768px) {
+    .main-logo {
+        max-height: 70px; /* Plus petit sur téléphone */
+    }
+}
+/* Style pour le logo avec l'animation */
+.main-logo {
+    max-height: 180px; 
+    width: auto;
+    display: block;
+    margin: 0 auto;
+    
+    /* On applique l'animation ici */
+    animation: tourneHorizontal 6s infinite linear;
+    perspective: 1000px; /* Ajoute de la profondeur à l'effet 3D */
+}
+
+/* Définition de l'animation de rotation */
+@keyframes tourneHorizontal {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+/* Optionnel : Arrêter la rotation quand on passe la souris dessus */
+.main-logo:hover {
+    animation-play-state: paused;
+}
+
+/* Réglage du titre pour qu'il reste bien collé au logo */
+header h1 {
+    margin-top: 0px;
+    font-family: 'Playfair Display', serif;
+}
+
+
+/* ===== RÉGLAGES SPÉCIFIQUES MOBILE (SMARTPHONE UNIQUEMENT) ===== */
+@media (max-width: 768px) {
+    /* ... vos autres réglages mobiles existants (header, banner, etc.) ... */
+
+    /* Force le passage en 1 seule colonne pour le Contact */
+    .contact-container {
+        grid-template-columns: 1fr !important; 
+        padding: 1.5rem !important;
+        gap: 2rem;
+    }
+
+    /* Force le passage en 1 seule colonne pour le À Propos */
+    .about-content {
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        text-align: center;
+    }
+
+    /* Ajuste la taille du logo sur téléphone seulement */
+    .main-logo {
+        max-height: 80px !important; 
+    }
+
+    /* Centre les titres de contact sur mobile */
+    .contact-info {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <img src="logo png.png" alt="Logo Africa Chic" class="main-logo">
+    </div>
+    <h1>La Fibre <span>Africaine</span></h1>
+    <nav>
+        <a href="#boutique">Boutique</a>
+        <a href="#apropos">À Propos</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+    <div class="slideshow-container" id="mainBanner"></div>
+
+    <section id="boutique">
+        <h2 class="section-title">Nos Créations</h2>
+        <div class="grid" id="productGrid"></div>
+    </section>
+
+    <section id="apropos">
+        <h2 class="section-title">Notre Histoire</h2>
+        <div class="about-content">
+            <div style="flex:1"><img src="FA.png" style="width:100%; border-radius:15px;"></div>
+            <div style="flex:1"><h3>Plus qu’un sac, une part d’Afrique entre vos mains.</h3><p><br>"Tout commence par une passion pour les couleurs vibrantes et les motifs qui racontent une histoire. Nos créations ne sont pas de simples accessoires : elles sont le fruit d'un savoir-faire artisanal rigoureux et d'un amour profond pour le textile africain authentique.
+
+<br><br>Chaque sac est entièrement confectionné à la main, faisant de chaque pièce un modèle unique. Du choix du tissu à la dernière couture, nous mettons un point d'honneur à utiliser du pur tissu africain pour vous offrir une qualité exceptionnelle et un style qui célèbre la diversité. Porter nos créations, c'est affirmer son originalité tout en soutenant l'artisanat fait avec le cœur."</p></div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Contactez-nous</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h4>Nos Coordonnées</h4>
+                <p>📍 Dakar, Sénégal</p>
+                <p>📞 WhatsApp : +221 00 000 00 00</p>
+                <p>📧 Email : contact@africachic.com</p>
+                <p>🕒 Lun - Sam : 09h00 - 19h00</p>
+            </div>
+            <div class="contact-form">
+                <form onsubmit="event.preventDefault(); alert('Message envoyé !');">
+                    <input type="text" placeholder="Votre Nom" required>
+                    <input type="email" placeholder="Votre Email" required>
+                    <textarea placeholder="Votre Message" rows="5" required></textarea>
+                    <button type="submit" class="btn btn-buy" style="width: 100%;">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <h2>La Fibre Africaine</h2>
+    <p>© 2026 - Boutique Artisanale Africaine</p>
+</footer>
+
+<div class="cart" id="cart">
+    <h3 style="text-align:center;">Ma Commande</h3>
+    <div id="cartList"></div>
+    <div id="cartTotal" style="font-weight:700; font-size:1.2rem; text-align:center; margin-bottom:1rem;">Total : 0 €</div>
+    <a id="cartWa" class="btn btn-wa" target="_blank">Commander sur WhatsApp</a>
+    <p onclick="toggleCart(false)" style="text-align:center; cursor:pointer; margin-top:15px; color:#999; font-size:0.8rem;">FERMER</p>
+</div>
+
+<script>
+    const products = [
+        {name: "Sac Ébène Royale", price: 125, img: "https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=800"},
+        {name: "Pochette Sunset", price: 45, img: "https://images.unsplash.com/photo-1544816153-165c77b3dc5d?auto=format&fit=crop&w=800"},
+        {name: "Cabas Safari Chic", price: 85, img: "https://images.unsplash.com/photo-1598533123413-82c5fa7ce571?auto=format&fit=crop&w=800"},
+        {name: "Héritage Indigo", price: 95, img: "https://images.unsplash.com/photo-1566150905458-1bf1fd111c36?auto=format&fit=crop&w=800"},
+        {name: "Bandoulière Nomade", price: 65, img: "https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?auto=format&fit=crop&w=800"},
+        {name: "Luxuria Kente", price: 150, img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800"},
+        {name: "Sac de Jour Bogolan", price: 75, img: "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=800"},
+        {name: "Mini-Sac Glam Wax", price: 50, img: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800"},
+        {name: "Le Petit Savane", price: 110, img: "https://images.unsplash.com/photo-1575032617751-6ddec2089882?auto=format&fit=crop&w=800"},
+        {name: "Cabas Royal Gold", price: 130, img: "https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=800"},
+        {name: "Pochette Azur", price: 40, img: "https://images.unsplash.com/photo-1566150902887-9679ec158ba6?auto=format&fit=crop&w=800"},
+        {name: "Sac Tressé Sable", price: 90, img: "https://images.unsplash.com/photo-1590739225287-bd26514ca9ba?auto=format&fit=crop&w=800"}
+    ];
+
+    // Générer la grille de produits (Reste fixe)
+    const grid = document.getElementById('productGrid');
+    products.forEach(p => {
+        grid.innerHTML += `
+            <div class="card">
+                <div class="img-container"><img src="${p.img}" alt="${p.name}"></div>
+                <div class="card-body">
+                    <h3>${p.name}</h3>
+                    <div class="price">${p.price} €</div>
+                    <div class="actions">
+                        <button class="btn btn-buy" onclick="add('${p.name}', ${p.price})">Acheter</button>
+                        <a class="btn btn-wa" href="https://wa.me/0000000000" target="_blank">WhatsApp</a>
+                    </div>
+                </div>
+            </div>`;
+    });
+
+    // Générer les slides de la bannière à partir des 12 produits
+    const banner = document.getElementById('mainBanner');
+    products.forEach(p => {
+        banner.innerHTML += `
+            <div class="mySlides">
+                <img src="${p.img}">
+                <div class="slide-text">
+                    <h2>${p.name}</h2>
+                </div>
+            </div>`;
+    });
+
+    // Animation du carrousel (toutes les 3 secondes)
+    let slideIndex = 0;
+    function showSlides() {
+        let slides = document.getElementsByClassName("mySlides");
+        for (let i = 0; i < slides.length; i++) slides[i].style.display = "none";
+        slideIndex++;
+        if (slideIndex > slides.length) slideIndex = 1;
+        slides[slideIndex-1].style.display = "block";
+        setTimeout(showSlides, 3000);
+    }
+    showSlides();
+
+    // Gestion du panier
+    let cart = [];
+    function add(name, price) {
+        let item = cart.find(i => i.name === name);
+        if (item) item.qty++; else cart.push({name, price, qty: 1});
+        render();
+        toggleCart(true);
+    }
+    function toggleCart(open) { document.getElementById('cart').classList.toggle('open', open); }
+    function render() {
+        const list = document.getElementById('cartList');
+        let total = 0;
+        list.innerHTML = "";
+        cart.forEach((item, index) => {
+            total += item.price * item.qty;
+            list.innerHTML += `<div class="cart-item">
+                <span>${item.name} x${item.qty}</span>
+                <span>${item.price * item.qty}€ <span onclick="cart.splice(${index},1);render();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
+            </div>`;
+        });
+        document.getElementById('cartTotal').innerText = "Total : " + total + " €";
+        let text = "La Fibre Africaine :\n" + cart.map(i => `- ${i.name} x${i.qty}`).join("\n") + "\nTotal : " + total + "€";
+        document.getElementById('cartWa').href = "https://wa.me/0000000000?text=" + encodeURIComponent(text);
+    }
+</script>
+
+</body>
+</html>
