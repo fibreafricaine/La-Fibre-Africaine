@@ -8,295 +8,271 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --dark: #0f0f0f;
-            --gold: #c89b3c;
-            --bg: #f6f4ef;
-            --white: #ffffff;
-            --whatsapp: #25D366;
-        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+:root {
+    --dark: #0f0f0f;
+    --gold: #c89b3c;
+    --bg: #f6f4ef;
+    --white: #ffffff;
+    --whatsapp: #25D366;
+}
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            color: #222;
-            line-height: 1.6;
-        }
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
-        /* ===== HEADER ===== */
-        header {
-            background: #fff;
-            padding: 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; }
-        header span { color: var(--gold); }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: #222;
+    line-height: 1.6;
+}
 
-        nav { margin-top: 15px; }
-        nav a { 
-            margin: 0 20px; 
-            text-decoration: none; 
-            color: #333; 
-            font-weight: 500; 
-            font-size: 0.9rem; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            position: relative;
-            padding-bottom: 5px;
-            display: inline-block;
-        }
+/* ===== HEADER ===== */
+header {
+    background: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column; /* 2 lignes : logo+titre + nav */
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            background-color: var(--gold);
-            transition: all 0.3s ease-in-out;
-            transform: translateX(-50%);
-        }
-        nav a:hover::after { width: 100%; }
+/* Ligne logo + titre */
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* espace entre logo et texte */
+}
 
-        /* ===== BANNIÈRE (CARROUSEL DES 12 PRODUITS) ===== */
-        .slideshow-container {
-            width: 100%;
-            height: 600px;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-        }
-        .mySlides { display: none; width: 100%; height: 100%; animation: fade 1.5s; }
-        @keyframes fade { from {opacity: .4} to {opacity: 1} }
-        .mySlides img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
-        .slide-text {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: white; text-align: center; width: 80%;
-        }
-        .slide-text h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
-        .slide-text .price-banner { font-size: 1.5rem; color: var(--gold); font-weight: 600; }
+/* Logo réduit de 30% et animation conservée */
+.main-logo {
+    max-height: 126px; /* 180px x 0.7 = 126px */
+    width: auto;
+    display: block;
+    animation: tourneHorizontal 6s infinite linear;
+    perspective: 1000px;
+}
+@keyframes tourneHorizontal { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+.main-logo:hover { animation-play-state: paused; }
 
-        /* ===== BOUTIQUE (GRILLE 4x3) ===== */
-        section { max-width: 1300px; margin: 4rem auto; padding: 0 1.5rem; }
-        h2.section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; }
-        h2.section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gold); margin: 10px auto; }
+/* Titre à côté du logo */
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin: 0;
+}
+header span { color: var(--gold); }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-        }
+/* ===== NAVIGATION ===== */
+nav {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* espace entre les liens */
+}
+nav a { 
+    text-decoration: none; 
+    color: #333; 
+    font-weight: 500; 
+    font-size: 0.9rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 5px;
+    display: inline-block;
+}
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--gold);
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+nav a:hover::after { width: 100%; }
 
-        .card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.4s; display: flex; flex-direction: column; }
-        .card .img-container { overflow: hidden; height: 260px; }
-        .card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
-        .card:hover img { transform: scale(1.1); }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+/* ===== PANIER ===== */
+.cart-link {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.cart-link:hover {
+    color: var(--gold);
+    transform: scale(1.1);
+}
 
-        .card-body { padding: 1.2rem; flex-grow: 1; }
-        .card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 5px; }
-        .price { color: var(--gold); font-weight: 700; margin-bottom: 1rem; }
-        .actions { display: flex; gap: 8px; }
+/* ===== BANNIÈRE ===== */
+.slideshow-container {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+.mySlides { display: none; width: 100%; height: 100%; animation: fade 1.5s; }
+@keyframes fade { from {opacity: .4} to {opacity: 1} }
+.mySlides img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+.slide-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: white; text-align: center; width: 80%;
+}
+.slide-text h2 { font-family: 'Playfair Display', serif; font-size: 3.5rem; margin-bottom: 10px; }
+.slide-text .price-banner { font-size: 1.5rem; color: var(--gold); font-weight: 600; }
 
-        .btn { flex: 1; padding: 0.7rem; border-radius: 50px; font-size: 0.75rem; text-align: center; text-decoration: none; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
-        .btn-buy { background: var(--dark); color: #fff; }
-        .btn-buy:hover { background: var(--gold); }
-        .btn-wa { background: var(--whatsapp); color: #fff; }
+/* ===== BOUTIQUE ===== */
+section { max-width: 1300px; margin: 4rem auto; padding: 0 1.5rem; }
+h2.section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; }
+h2.section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--gold); margin: 10px auto; }
 
-        /* ===== PANIER ===== */
-        .cart { 
-            position: fixed; top: 50%; transform: translateY(-50%); 
-            right: -400px; width: 350px; max-height: 80vh; 
-            background: #fff; box-shadow: -10px 0 40px rgba(0,0,0,0.15); 
-            padding: 2rem; transition: 0.4s; z-index: 2000; 
-            border-radius: 25px 0 0 25px; 
-            display: flex; flex-direction: column;
-        }
-        .cart.open { right: 0; }
-        #cartList { overflow-y: auto; flex-grow: 1; margin: 1rem 0; }
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+.card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.4s; display: flex; flex-direction: column; }
+.card .img-container { overflow: hidden; height: 260px; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.card:hover img { transform: scale(1.1); }
+.card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+.card-body { padding: 1.2rem; flex-grow: 1; }
+.card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; margin-bottom: 5px; }
+.price { color: var(--gold); font-weight: 700; margin-bottom: 1rem; }
+.actions { display: flex; gap: 8px; }
+.btn { flex: 1; padding: 0.7rem; border-radius: 50px; font-size: 0.75rem; text-align: center; text-decoration: none; font-weight: 600; cursor: pointer; border: none; transition: 0.3s; }
+.btn-buy { background: var(--dark); color: #fff; }
+.btn-buy:hover { background: var(--gold); }
+.btn-wa { background: var(--whatsapp); color: #fff; }
 
-        /* ===== À PROPOS & CONTACT ===== */
-        .about-content { display: flex; align-items: center; gap: 3rem; background: #fff; padding: 3rem; border-radius: 20px; }
-        .contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #fff; padding: 3rem; border-radius: 20px; }
-        .contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 8px; }
+/* ===== PANIER ===== */
+.cart {       
+    position: fixed;
+    top: 30%;
+    transform: translateY(-50%);
+    right: -400px;
+    width: 350px;
+    max-height: 80vh;
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+    padding: 2rem;
+    transition: 0.4s;
+    z-index: 2000;
+    border-radius: 25px 0 0 25px;
+    display: flex;
+    flex-direction: column;
+}
+.cart.open { right: 0; }
+#cartList { overflow-y: auto; flex-grow: 1; margin: 1rem 0; }
+.cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
 
-        footer { background: var(--dark); color: #fff; text-align: center; padding: 3rem; margin-top: 4rem; }
+/* ===== À PROPOS & CONTACT ===== */
+.about-content { display: flex; align-items: center; gap: 3rem; background: #fff; padding: 3rem; border-radius: 20px; }
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #fff; padding: 3rem; border-radius: 20px; }
+.contact-form input, .contact-form textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border: 1px solid #ddd; border-radius: 8px; }
 
-        @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+footer { background: var(--dark); color: #fff; text-align: center; padding: 3rem; margin-top: 4rem; }
 
-      /* ===== RÉGLAGES SPÉCIFIQUES MOBILE (SMARTPHONE) ===== */
+/* ===== MEDIA QUERIES ===== */
+@media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
 @media (max-width: 768px) {
-    /* Header plus fin */
     header h1 { font-size: 1.5rem; }
     nav a { margin: 0 5px; font-size: 0.7rem; }
-
-    /* Bannière adaptée */
     .slideshow-container { height: 300px; }
     .slide-text h2 { font-size: 1.6rem; }
-
-    /* Grille 2 colonnes pour voir plus de produits */
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        padding: 0 10px;
-    }
-
-    /* Cartes produits compactes */
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 10px; }
     .card .img-container { height: 160px; }
     .card-body { padding: 0.7rem; }
     .card-body h3 { font-size: 0.8rem; line-height: 1.2; height: 2rem; }
-    
-    /* Boutons de la grille */
     .actions { flex-direction: column; gap: 4px; }
     .btn { padding: 8px; font-size: 0.7rem; border-radius: 6px; }
-
-    /* LE PANIER MOBILE (TIROIR BAS) */
-    .cart { 
-        width: 100%; 
-        right: 0; 
-        left: 0;
-        top: auto;
-        bottom: -100%; /* Caché en bas */
-        transform: none; 
-        height: auto; 
-        max-height: 50vh; /* Ne prend que la moitié de l'écran */
-        border-radius: 25px 25px 0 0; /* Arrondi sur le haut uniquement */
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
-        padding: 1.5rem;
-        transition: bottom 0.4s ease-in-out;
-    }
-
-    /* Quand le panier est ouvert sur mobile */
-    .cart.open { 
-        bottom: 0; 
-    }
-
-    /* Ajustement du bouton WhatsApp dans le panier */
-    #cartWa {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        font-size: 1rem;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    /* Liste d'articles du panier plus compacte */
+    .cart { width: 100%; right: 0; left: 0; top: auto; bottom: -100%; transform: none; height: auto; max-height: 50vh; border-radius: 25px 25px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); padding: 1.5rem; transition: bottom 0.4s ease-in-out; }
+    .cart.open { bottom: 0; }
+    #cartWa { display: block; width: 100%; padding: 12px; font-size: 1rem; text-align: center; margin-top: 10px; }
     .cart-item { font-size: 0.9rem; padding: 8px 0; }
+    .contact-container { grid-template-columns: 1fr !important; padding: 1.5rem !important; gap: 2rem; }
+    .about-content { flex-direction: column !important; padding: 1.5rem !important; text-align: center; }
+    .main-logo { max-height: 80px !important; }
+    .contact-info { text-align: center; margin-bottom: 20px; }
 }
 
-/* Style pour le logo */
-.logo-container {
-    margin-bottom: -20px; /* On supprime l'espace sous le conteneur */
-    line-height: 0;     /* Supprime l'espace résiduel sous l'image */
-}
-
-.main-logo {
-    max-height: 160px; 
-    width: auto;      
-    display: block;    
-    margin: 0 auto;    
-}
-
-/* AJOUTEZ CECI pour le titre */
-header h1 {
-    margin-top: 0px;    /* Supprime la marge automatique du titre */
-    padding-top: 5px;   /* Permet un contrôle précis (ajustez de 0 à 10px) */
-    font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
-}
-
-/* Ajustement pour mobile */
 @media (max-width: 768px) {
+    /* HEADER FIXE */
+    header {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10000;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        padding: 0.5rem 1rem;
+    }
+
+    body {
+        padding-top: 80px; /* espace pour le header */
+    }
+
+    /* Logo + titre alignés */
+    .header-flex {
+        flex-direction: row !important; /* sur une ligne */
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap; /* permet aux textes longs de revenir si besoin */
+    }
+
+    header h1 {
+        font-size: 1.2rem !important;
+        white-space: nowrap;
+        margin: 0;
+    }
+
     .main-logo {
-        max-height: 70px; /* Plus petit sur téléphone */
-    }
-}
-/* Style pour le logo avec l'animation */
-.main-logo {
-    max-height: 180px; 
-    width: auto;
-    display: block;
-    margin: 0 auto;
-    
-    /* On applique l'animation ici */
-    animation: tourneHorizontal 6s infinite linear;
-    perspective: 1000px; /* Ajoute de la profondeur à l'effet 3D */
-}
-
-/* Définition de l'animation de rotation */
-@keyframes tourneHorizontal {
-    from {
-        transform: rotateY(0deg);
-    }
-    to {
-        transform: rotateY(360deg);
-    }
-}
-
-/* Optionnel : Arrêter la rotation quand on passe la souris dessus */
-.main-logo:hover {
-    animation-play-state: paused;
-}
-
-/* Réglage du titre pour qu'il reste bien collé au logo */
-header h1 {
-    margin-top: 0px;
-    font-family: 'Playfair Display', serif;
-}
-
-
-/* ===== RÉGLAGES SPÉCIFIQUES MOBILE (SMARTPHONE UNIQUEMENT) ===== */
-@media (max-width: 768px) {
-    /* ... vos autres réglages mobiles existants (header, banner, etc.) ... */
-
-    /* Force le passage en 1 seule colonne pour le Contact */
-    .contact-container {
-        grid-template-columns: 1fr !important; 
-        padding: 1.5rem !important;
-        gap: 2rem;
+        max-height: 50px !important;
     }
 
-    /* Force le passage en 1 seule colonne pour le À Propos */
-    .about-content {
-        flex-direction: column !important;
-        padding: 1.5rem !important;
+    /* NAVIGATION MOBILE */
+    nav {
+        flex-wrap: wrap; /* permet aux liens de se mettre sur 2 lignes si besoin */
+        justify-content: center;
+        margin-top: 5px;
+        gap: 10px;
+    }
+    nav a {
+        font-size: 0.8rem;
+        padding: 5px 8px;
         text-align: center;
-    }
-
-    /* Ajuste la taille du logo sur téléphone seulement */
-    .main-logo {
-        max-height: 80px !important; 
-    }
-
-    /* Centre les titres de contact sur mobile */
-    .contact-info {
-        text-align: center;
-        margin-bottom: 20px;
+        flex: 1 1 auto; /* liens flexibles pour mieux s’aligner */
     }
 }
-    </style>
+
+
+
+</style>
 </head>
 <body>
 
 <header>
-    <div class="logo-container">
-        <img src="logo png.png" alt="Logo Africa Chic" class="main-logo">
-    </div>
+    <div class="header-flex">
+    <img src="logo png.png" alt="Logo Africa Chic" class="main-logo">
     <h1>La Fibre <span>Africaine</span></h1>
+</div>
     <nav>
         <a href="#boutique">Boutique</a>
         <a href="#apropos">À Propos</a>
         <a href="#contact">Contact</a>
+        <!-- PANIER MENU -->
+        <a class="cart-link" onclick="toggleCart(true)">
+            <i class="fas fa-shopping-bag"></i>
+            Panier
+            <span class="cart-count" id="cartCount">0</span>
+        </a>
     </nav>
 </header>
 
@@ -323,9 +299,9 @@ header h1 {
         <div class="contact-container">
             <div class="contact-info">
                 <h4>Nos Coordonnées</h4>
-                <p>📍 Montréal, Canada</p>
-                <p>📞 WhatsApp : +1 (263)880-7371</p>
-                <p>📧 Email : fibreafricaine@gmail.com</p>
+                <p>📍 Dakar, Sénégal</p>
+                <p>📞 WhatsApp : +221 00 000 00 00</p>
+                <p>📧 Email : contact@africachic.com</p>
                 <p>🕒 Lun - Sam : 09h00 - 19h00</p>
             </div>
             <div class="contact-form">
@@ -369,7 +345,6 @@ header h1 {
         {name: "Sac Tressé Sable", price: 90, img: "https://images.unsplash.com/photo-1590739225287-bd26514ca9ba?auto=format&fit=crop&w=800"}
     ];
 
-    // Générer la grille de produits (Reste fixe)
     const grid = document.getElementById('productGrid');
     products.forEach(p => {
         grid.innerHTML += `
@@ -386,7 +361,6 @@ header h1 {
             </div>`;
     });
 
-    // Générer les slides de la bannière à partir des 12 produits
     const banner = document.getElementById('mainBanner');
     products.forEach(p => {
         banner.innerHTML += `
@@ -398,7 +372,6 @@ header h1 {
             </div>`;
     });
 
-    // Animation du carrousel (toutes les 3 secondes)
     let slideIndex = 0;
     function showSlides() {
         let slides = document.getElementsByClassName("mySlides");
@@ -410,27 +383,30 @@ header h1 {
     }
     showSlides();
 
-    // Gestion du panier
+    // Panier
     let cart = [];
     function add(name, price) {
         let item = cart.find(i => i.name === name);
-        if (item) item.qty++; else cart.push({name, price, qty: 1});
-        render();
-        toggleCart(true);
+        if (item) item.qty++; else cart.push({name, price, qty:1});
+        renderCart();
     }
     function toggleCart(open) { document.getElementById('cart').classList.toggle('open', open); }
-    function render() {
+
+    function renderCart() {
         const list = document.getElementById('cartList');
         let total = 0;
+        let count = 0;
         list.innerHTML = "";
         cart.forEach((item, index) => {
             total += item.price * item.qty;
+            count += item.qty;
             list.innerHTML += `<div class="cart-item">
                 <span>${item.name} x${item.qty}</span>
-                <span>${item.price * item.qty}€ <span onclick="cart.splice(${index},1);render();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
+                <span>${item.price * item.qty}€ <span onclick="cart.splice(${index},1);renderCart();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
             </div>`;
         });
         document.getElementById('cartTotal').innerText = "Total : " + total + " €";
+        document.getElementById('cartCount').innerText = count;
         let text = "La Fibre Africaine :\n" + cart.map(i => `- ${i.name} x${i.qty}`).join("\n") + "\nTotal : " + total + "€";
         document.getElementById('cartWa').href = "https://wa.me/0000000000?text=" + encodeURIComponent(text);
     }
@@ -438,5 +414,3 @@ header h1 {
 
 </body>
 </html>
-
-
