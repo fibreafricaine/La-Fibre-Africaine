@@ -405,7 +405,7 @@ footer { background: var(--dark); color: #fff; text-align: center; padding: 3rem
             count += item.qty;
             list.innerHTML += `<div class="cart-item">
                 <span>${item.name} x${item.qty}</span>
-                <span>${item.price * item.qty}€ <span onclick="cart.splice(${index},1);renderCart();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
+                <span>${item.price * item.qty}$ <span onclick="cart.splice(${index},1);renderCart();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
             </div>`;
         });
         document.getElementById('cartTotal').innerText = "Total : " + total + " $";
