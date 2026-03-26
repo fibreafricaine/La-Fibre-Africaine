@@ -408,9 +408,9 @@ footer { background: var(--dark); color: #fff; text-align: center; padding: 3rem
                 <span>${item.price * item.qty}€ <span onclick="cart.splice(${index},1);renderCart();" style="color:red; cursor:pointer; margin-left:5px;">✕</span></span>
             </div>`;
         });
-        document.getElementById('cartTotal').innerText = "Total : " + total + " €";
+        document.getElementById('cartTotal').innerText = "Total : " + total + " $";
         document.getElementById('cartCount').innerText = count;
-        let text = "La Fibre Africaine :\n" + cart.map(i => `- ${i.name} x${i.qty}`).join("\n") + "\nTotal : " + total + "€";
+        let text = "La Fibre Africaine :\n" + cart.map(i => `- ${i.name} x${i.qty}`).join("\n") + "\nTotal : " + total + "$";
         document.getElementById('cartWa').href = "https://wa.me/15147545175?text=" + encodeURIComponent(text);
     }
 </script>
